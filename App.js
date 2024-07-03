@@ -1,7 +1,7 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 26 Oct 1985, 4:15:00 AM
- *  Last update: 3 Jul 2024, 1:50:07 PM
+ *  Last update: 3 Jul 2024, 2:46:31 PM
  *  Copyright (c) 1985 - 2024 Kaleb Jubar
  */
 import { StatusBar } from "expo-status-bar";
@@ -88,9 +88,24 @@ export default function App() {
                     // copy task list
                     const newTasks = tasks.slice();
                     // filter out selected task
-                    const filteredTasks = newTasks.filter((task) => task.id !== id);
+                    let taskDesc;
+                    const filteredTasks = newTasks.filter((task) => {
+                        if (task.id === id) {
+                            taskDesc = task.description;
+                        } else {
+                            return true;
+                        }
+                    });
                     // update state
                     setTasks(filteredTasks);
+                    // show toast
+                    Toast.show({
+                        type: "success",
+                        text1: "Delete Succeeded",
+                        text2: `Successfully deleted "${taskDesc}".`,
+                        position: "bottom",
+                        bottomOffset: 120,
+                    });
                 }
             }
         ]);
