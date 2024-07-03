@@ -1,7 +1,7 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 29 May 2024, 5:26:32 PM
- *  Last update: 3 Jul 2024, 1:53:15 PM
+ *  Last update: 3 Jul 2024, 2:20:25 PM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 import { useState } from "react";
@@ -37,7 +37,7 @@ export default function Form({ addTaskCallback }) {
         Toast.show({
             type: "success",
             text1: "Add Succeeded",
-            text2: "Successfully added task to the list!",
+            text2: `Successfully added "${description}" to the list!`,
             position: "bottom",
             bottomOffset: 120,
         });
