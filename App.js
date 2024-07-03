@@ -1,7 +1,7 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 26 Oct 1985, 4:15:00 AM
- *  Last update: 3 Jul 2024, 12:53:24 PM
+ *  Last update: 3 Jul 2024, 12:55:37 PM
  *  Copyright (c) 1985 - 2024 Kaleb Jubar
  */
 import { StatusBar } from "expo-status-bar";
@@ -102,6 +102,9 @@ export default function App() {
 
                 <Tab.Navigator screenOptions={{
                     tabBarActiveTintColor: primaryColor,
+                    tabBarStyle: {
+                        marginBottom: 7,
+                    },
                 }}>
                     <Tab.Screen
                         name="TasksScreen"
