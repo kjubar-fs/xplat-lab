@@ -1,7 +1,7 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 29 May 2024, 5:26:40 PM
- *  Last update: 3 Jul 2024, 12:34:34 PM
+ *  Last update: 3 Jul 2024, 2:02:07 PM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 import { View, ScrollView, Text } from "react-native";
@@ -44,10 +44,7 @@ export default function Tasks({ tasks, setCompletedCallback, deleteTaskCallback 
     };
 
     return (
-        <ScrollView
-            style={styles.container}
-            contentContainerStyle={styles.contentContainer}
-        >
+        <ScrollView contentContainerStyle={styles.contentContainer}>
             {renderTasks()}
         </ScrollView>
     );

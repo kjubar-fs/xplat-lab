@@ -1,18 +1,14 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 29 May 2024, 6:37:41 PM
- *  Last update: 3 Jul 2024, 12:34:17 PM
+ *  Last update: 3 Jul 2024, 2:01:23 PM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 10,
-    },
-
     contentContainer: {
+        padding: 10,
         gap: 15,
     },
 
