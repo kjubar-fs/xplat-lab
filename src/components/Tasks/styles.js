@@ -1,20 +1,23 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 29 May 2024, 6:37:41 PM
- *  Last update: 3 Jun 2024, 6:07:38 PM
+ *  Last update: 3 Jul 2024, 12:34:17 PM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
     container: {
-        flexGrow: 1,
+        flex: 1,
         padding: 10,
+    },
+
+    contentContainer: {
         gap: 15,
     },
 
     emptyMsgContainer: {
-        flexGrow: 1,
+        flex: 1,
         alignItems: "center",
         justifyContent: "center",
     },

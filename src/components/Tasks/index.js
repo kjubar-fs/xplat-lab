@@ -1,10 +1,10 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 29 May 2024, 5:26:40 PM
- *  Last update: 3 Jun 2024, 4:04:15 PM
+ *  Last update: 3 Jul 2024, 12:34:34 PM
  *  Copyright (c) 2024 Kaleb Jubar
  */
-import { View, Text } from "react-native";
+import { View, ScrollView, Text } from "react-native";
 
 import Task from "./Task";
 import styles from "./styles";
@@ -44,8 +44,11 @@ export default function Tasks({ tasks, setCompletedCallback, deleteTaskCallback 
     };
 
     return (
-        <View style={styles.container}>
+        <ScrollView
+            style={styles.container}
+            contentContainerStyle={styles.contentContainer}
+        >
             {renderTasks()}
-        </View>
+        </ScrollView>
     );
 }

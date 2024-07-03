@@ -1,7 +1,7 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 26 Oct 1985, 4:15:00 AM
- *  Last update: 5 Jun 2024, 12:40:07 PM
+ *  Last update: 3 Jul 2024, 12:53:24 PM
  *  Copyright (c) 1985 - 2024 Kaleb Jubar
  */
 import { StatusBar } from "expo-status-bar";
@@ -12,11 +12,19 @@ import { ScrollView, View, Alert } from "react-native";
 import "react-native-get-random-values";
 import { v4 as uuid } from "uuid";
 
+// navigation
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { MaterialIcons } from '@expo/vector-icons';
+
 import styles from "./src/styles/structure";
 import Header from "./src/components/Header";
 import Tasks from "./src/components/Tasks";
 import Form from "./src/components/Form";
 import Footer from "./src/components/Footer";
+import { primaryColor } from "./src/includes/variables";
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
     // create state for task list with a few default tasks
@@ -86,34 +94,63 @@ export default function App() {
     };
 
     return (
-        <View style={styles.container}>
-            <StatusBar style="light" />
-            
-            <Header />
-            
-            <ScrollView
-                // ScrollView actually has two nested containers, the content container
-                // and the outer container
-                // style applies to the outer and content applies to the inner
-                // to center the blank task list message, we have to set flex on the
-                // content container
-                // however, this breaks scrolling on the list when we have tasks,
-                // so we move that style to the outer container when tasks isn't empty
-                contentContainerStyle={tasks.length === 0 ? styles.list : null}
-                style={tasks.length !== 0 ? styles.list : null}
-            >
-                <Tasks
-                    tasks={tasks}
-                    setCompletedCallback={setCompleted}
-                    deleteTaskCallback={deleteTask}
-                />
-            </ScrollView>
+        <NavigationContainer>
+            <View style={styles.container}>
+                <StatusBar style="light" />
+                
+                <Header />
 
-            <View style={styles.form}>
-                <Form addTaskCallback={addTask} />
+                <Tab.Navigator screenOptions={{
+                    tabBarActiveTintColor: primaryColor,
+                }}>
+                    <Tab.Screen
+                        name="TasksScreen"
+                        options={{
+                            title: "Tasks",
+                            headerShown: false,
+                            tabBarIcon: ({ color, size }) => (
+                                <MaterialIcons
+                                    name="checklist"
+                                    size={size}
+                                    color={color}
+                                />
+                            ),
+                        }}
+                    >
+                        {(props) => (
+                            <Tasks
+                                {...props}
+                                tasks={tasks}
+                                setCompletedCallback={setCompleted}
+                                deleteTaskCallback={deleteTask}
+                            />
+                        )}
+                    </Tab.Screen>
+
+                    <Tab.Screen
+                        name="AddTaskScreen"
+                        options={{
+                            title: "Add Task",
+                            tabBarIcon: ({ color, size }) => (
+                                <MaterialIcons
+                                    name="playlist-add"
+                                    size={size}
+                                    color={color}
+                                />
+                            ),
+                        }}
+                    >
+                        {(props) => (
+                            <Form
+                                {...props}
+                                addTaskCallback={addTask}
+                            />
+                        )}
+                    </Tab.Screen>
+                </Tab.Navigator>
+
+                <Footer />
             </View>
-
-            <Footer />
-        </View>
+        </NavigationContainer>
     );
 }
