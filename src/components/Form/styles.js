@@ -1,16 +1,15 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 29 May 2024, 5:42:19 PM
- *  Last update: 3 Jun 2024, 3:15:28 PM
+ *  Last update: 3 Jul 2024, 1:18:45 PM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 import { Platform, StyleSheet } from "react-native";
 
-import { primaryColor } from "../../includes/variables";
+import { primaryColor, secondaryColor } from "../../includes/variables";
 
 export default StyleSheet.create({
     container: {
-        backgroundColor: primaryColor,
         padding: 10,
     },
 
@@ -33,6 +32,11 @@ export default StyleSheet.create({
         color: "red",
     },
 
+    label: {
+        color: secondaryColor,
+        marginBottom: 7,
+    },
+
     textInput: {
         backgroundColor: "white",
         borderWidth: 1,
@@ -47,13 +51,13 @@ export default StyleSheet.create({
     },
 
     switchText: {
-        color: "white",
+        color: secondaryColor,
         marginRight: Platform.OS === "ios" ? 10 : 4,
     },
 
     button: {
         padding: 10,
-        backgroundColor: "white",
+        backgroundColor: primaryColor,
         borderRadius: 5,
         shadowOffset: {
             width: 1,
@@ -66,5 +70,6 @@ export default StyleSheet.create({
     buttonText: {
         fontSize: 18,
         textAlign: "center",
+        color: "white",
     },
 });

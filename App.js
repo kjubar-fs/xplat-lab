@@ -1,7 +1,7 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 26 Oct 1985, 4:15:00 AM
- *  Last update: 3 Jul 2024, 12:55:37 PM
+ *  Last update: 3 Jul 2024, 1:50:07 PM
  *  Copyright (c) 1985 - 2024 Kaleb Jubar
  */
 import { StatusBar } from "expo-status-bar";
@@ -16,6 +16,9 @@ import { v4 as uuid } from "uuid";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialIcons } from '@expo/vector-icons';
+
+// toasts
+import Toast from "react-native-toast-message";
 
 import styles from "./src/styles/structure";
 import Header from "./src/components/Header";
@@ -94,66 +97,70 @@ export default function App() {
     };
 
     return (
-        <NavigationContainer>
-            <View style={styles.container}>
-                <StatusBar style="light" />
-                
-                <Header />
+        <>
+            <NavigationContainer>
+                <View style={styles.container}>
+                    <StatusBar style="light" />
+                    
+                    <Header />
 
-                <Tab.Navigator screenOptions={{
-                    tabBarActiveTintColor: primaryColor,
-                    tabBarStyle: {
-                        marginBottom: 7,
-                    },
-                }}>
-                    <Tab.Screen
-                        name="TasksScreen"
-                        options={{
-                            title: "Tasks",
-                            headerShown: false,
-                            tabBarIcon: ({ color, size }) => (
-                                <MaterialIcons
-                                    name="checklist"
-                                    size={size}
-                                    color={color}
+                    <Tab.Navigator screenOptions={{
+                        tabBarActiveTintColor: primaryColor,
+                        tabBarStyle: {
+                            marginBottom: 7,
+                        },
+                    }}>
+                        <Tab.Screen
+                            name="TasksScreen"
+                            options={{
+                                title: "Tasks",
+                                headerShown: false,
+                                tabBarIcon: ({ color, size }) => (
+                                    <MaterialIcons
+                                        name="checklist"
+                                        size={size}
+                                        color={color}
+                                    />
+                                ),
+                            }}
+                        >
+                            {(props) => (
+                                <Tasks
+                                    {...props}
+                                    tasks={tasks}
+                                    setCompletedCallback={setCompleted}
+                                    deleteTaskCallback={deleteTask}
                                 />
-                            ),
-                        }}
-                    >
-                        {(props) => (
-                            <Tasks
-                                {...props}
-                                tasks={tasks}
-                                setCompletedCallback={setCompleted}
-                                deleteTaskCallback={deleteTask}
-                            />
-                        )}
-                    </Tab.Screen>
+                            )}
+                        </Tab.Screen>
 
-                    <Tab.Screen
-                        name="AddTaskScreen"
-                        options={{
-                            title: "Add Task",
-                            tabBarIcon: ({ color, size }) => (
-                                <MaterialIcons
-                                    name="playlist-add"
-                                    size={size}
-                                    color={color}
+                        <Tab.Screen
+                            name="AddTaskScreen"
+                            options={{
+                                title: "Add Task",
+                                tabBarIcon: ({ color, size }) => (
+                                    <MaterialIcons
+                                        name="playlist-add"
+                                        size={size}
+                                        color={color}
+                                    />
+                                ),
+                            }}
+                        >
+                            {(props) => (
+                                <Form
+                                    {...props}
+                                    addTaskCallback={addTask}
                                 />
-                            ),
-                        }}
-                    >
-                        {(props) => (
-                            <Form
-                                {...props}
-                                addTaskCallback={addTask}
-                            />
-                        )}
-                    </Tab.Screen>
-                </Tab.Navigator>
+                            )}
+                        </Tab.Screen>
+                    </Tab.Navigator>
 
-                <Footer />
-            </View>
-        </NavigationContainer>
+                    <Footer />
+                </View>
+            </NavigationContainer>
+
+            <Toast />
+        </>
     );
 }

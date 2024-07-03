@@ -1,13 +1,14 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 29 May 2024, 5:26:32 PM
- *  Last update: 31 May 2024, 5:46:51 PM
+ *  Last update: 3 Jul 2024, 1:53:15 PM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 import { useState } from "react";
 import { View, Text, TextInput, Switch, Pressable, TouchableOpacity } from "react-native";
 
 import styles from "./styles";
+import Toast from "react-native-toast-message";
 
 export default function Form({ addTaskCallback }) {
     // create state for inputs and error message
@@ -32,6 +33,15 @@ export default function Form({ addTaskCallback }) {
         // call up to the root to add the task to the list
         addTaskCallback(description, completed);
 
+        // show a toast
+        Toast.show({
+            type: "success",
+            text1: "Add Succeeded",
+            text2: "Successfully added task to the list!",
+            position: "bottom",
+            bottomOffset: 120,
+        });
+
         // reset form fields
         setError("");
         setDescription("");
@@ -47,12 +57,12 @@ export default function Form({ addTaskCallback }) {
                     <Text style={styles.errorItem}>{error}</Text>
                 </View>}
 
+            <Text style={styles.label}>Description:</Text>
             <TextInput
                 style={styles.textInput}
                 value={description}
-                placeholder="Enter a task description"
                 multiline={true}
-                onChangeText={(description) => setDescription(description)}
+                onChangeText={setDescription}
             />
 
             <View style={styles.switch}>
@@ -62,7 +72,7 @@ export default function Form({ addTaskCallback }) {
                 </Pressable>
                 <Switch
                     value={completed}
-                    onValueChange={(completed) => setCompleted(completed)}
+                    onValueChange={setCompleted}
                     trackColor={{ false: "#DDD", true: "#B38B9D" }}
                     ios_backgroundColor="#DDD"
                     thumbColor="white"
