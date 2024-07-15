@@ -1,20 +1,25 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 29 May 2024, 5:26:32 PM
- *  Last update: 3 Jul 2024, 2:20:25 PM
+ *  Last update: 15 Jul 2024, 10:29:37 AM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 import { useState } from "react";
 import { View, Text, TextInput, Switch, Pressable, TouchableOpacity } from "react-native";
+import { useDispatch } from "react-redux";
+
+import { addTask } from "../../data/state/taskSlice";
 
 import styles from "./styles";
-import Toast from "react-native-toast-message";
 
 export default function Form({ addTaskCallback }) {
     // create state for inputs and error message
     const [description, setDescription] = useState("");
     const [completed, setCompleted] = useState(false);
     const [error, setError] = useState("");
+
+    // dispatch for redux
+    const dispatch = useDispatch();
 
     /**
      * Handler for add button press.
@@ -30,17 +35,11 @@ export default function Form({ addTaskCallback }) {
             return;
         }
 
-        // call up to the root to add the task to the list
-        addTaskCallback(description, completed);
-
-        // show a toast
-        Toast.show({
-            type: "success",
-            text1: "Add Succeeded",
-            text2: `Successfully added "${description}" to the list!`,
-            position: "bottom",
-            bottomOffset: 120,
-        });
+        // call add task reducer
+        dispatch(addTask({
+            description,
+            completed,
+        }));
 
         // reset form fields
         setError("");

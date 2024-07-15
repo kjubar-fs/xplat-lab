@@ -1,28 +1,38 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 29 May 2024, 5:26:51 PM
- *  Last update: 3 Jul 2024, 2:35:08 PM
+ *  Last update: 15 Jul 2024, 10:48:15 AM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 import {
     View, Text, Switch, Pressable,
-    TouchableHighlight, Modal, TouchableOpacity
+    TouchableHighlight, Modal, TouchableOpacity, Alert
 } from "react-native";
+import { useState } from "react";
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useDispatch } from "react-redux";
+
+import { setTaskCompleted, deleteTask } from "../../../data/state/taskSlice";
 
 import styles from "./styles";
 import { primaryColor } from "../../../includes/variables";
-import { useState } from "react";
 
-export default function Task({ id, description, completed, setCompleted, deleteTask }) {
+export default function Task({ id, description, completed }) {
+    // modal state tracking
     const [showDetailModal, setShowDetailModal] = useState(false);
+
+    // dispatch for state
+    const dispatch = useDispatch();
 
     /**
      * Toggle the completed status of this task.
      */
     const toggleCompleted = () => {
-        setCompleted(id, !completed);
+        dispatch(setTaskCompleted({
+            id,
+            completed: !completed,
+        }));
     };
 
     /**
@@ -36,7 +46,21 @@ export default function Task({ id, description, completed, setCompleted, deleteT
      * Delete this task from the list
      */
     const deleteThisTask = () => {
-        deleteTask(id);
+        // show the user an alert to confirm if they want to delete
+        Alert.alert("Delete Task?", "Are you sure you want to delete this task?", [
+            {
+                // no button does nothing
+                text: "No",
+                style: "cancel"
+            },
+            {
+                // yes button deletes the task
+                text: "Yes",
+                onPress: () => {
+                    dispatch(deleteTask(id));
+                }
+            }
+        ]);
     };
 
     return (
