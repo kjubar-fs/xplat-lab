@@ -1,7 +1,7 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 15 Jul 2024, 10:13:54 AM
- *  Last update: 15 Jul 2024, 11:31:28 AM
+ *  Last update: 15 Jul 2024, 11:36:15 AM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 import { createSlice } from "@reduxjs/toolkit";
@@ -16,6 +16,7 @@ import db from "../db/firebase";
 const taskSlice = createSlice({
     name: "task",
     initialState: {
+        // TODO: pull list of tasks when first loading here
         tasks: [],
     },
     reducers: {

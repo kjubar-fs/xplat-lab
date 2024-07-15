@@ -1,13 +1,13 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 15 Jul 2024, 9:59:47 AM
- *  Last update: 15 Jul 2024, 11:20:01 AM
+ *  Last update: 15 Jul 2024, 11:35:05 AM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 import { initializeApp } from "firebase/app";
 import {
     getFirestore, collection, doc,
-    addDoc, updateDoc, deleteDoc
+    addDoc, updateDoc, deleteDoc, getDocs
 } from "firebase/firestore";
 
 // setup Firebase app connection
@@ -115,6 +115,31 @@ class FirebaseDatabase {
             return true;
         } catch(err) {
             throw new Error(`Error deleting task: ${err}`);
+        }
+    }
+
+    /**
+     * Get the list of tasks from the database.
+     * @returns a Promise containing the list of tasks
+     */
+    async getTasks() {
+        // check if db is available
+        if (!this.isAvailable) {
+            throw new Error("Error: database has not been opened!");
+        }
+        
+        try {
+            // get all documents in the collection
+            const snapshot = await getDocs(collection(this.db, TASKS_COLL))
+            const results = [];
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                data.id = doc.id;
+                results.push(data);
+            });
+            return results;
+        } catch(err) {
+            throw new Error(`Error getting task list: ${err}`);
         }
     }
 }
