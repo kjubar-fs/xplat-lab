@@ -1,13 +1,11 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 26 Oct 1985, 4:15:00 AM
- *  Last update: 15 Jul 2024, 10:49:47 AM
+ *  Last update: 15 Jul 2024, 10:51:40 AM
  *  Copyright (c) 1985 - 2024 Kaleb Jubar
  */
 import { StatusBar } from "expo-status-bar";
 import { View } from "react-native";
-
-// imports for uuid generation
 
 // navigation
 import { NavigationContainer } from "@react-navigation/native";
