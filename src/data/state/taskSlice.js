@@ -1,14 +1,11 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 15 Jul 2024, 10:13:54 AM
- *  Last update: 18 Jul 2024, 11:17:18 AM
+ *  Last update: 18 Jul 2024, 11:43:54 AM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 // Redux
 import { createSlice } from "@reduxjs/toolkit";
-
-// toasts
-import Toast from "react-native-toast-message";
 
 const taskSlice = createSlice({
     name: "task",
