@@ -1,7 +1,7 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 29 May 2024, 5:26:32 PM
- *  Last update: 18 Jul 2024, 10:32:39 AM
+ *  Last update: 18 Jul 2024, 11:08:12 AM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 // React Native components
@@ -10,6 +10,9 @@ import { View, Text, TextInput, Switch, Pressable, TouchableOpacity, ActivityInd
 // hooks
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+
+// toasts
+import Toast from "react-native-toast-message";
 
 // database
 import { addTask } from "../../data/db";
@@ -64,6 +67,13 @@ export default function Form({ navigation }) {
     
             // navigate back to task list
             navigation.navigate("TasksScreen");
+
+            // show a toast
+            Toast.show({
+                type: "success",
+                text1: "Add Succeeded",
+                text2: `Successfully added "${task.description}" to the list!`,
+            });
         })();
     }
 

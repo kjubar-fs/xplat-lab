@@ -1,7 +1,7 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 18 Jul 2024, 9:31:10 AM
- *  Last update: 18 Jul 2024, 11:04:42 AM
+ *  Last update: 18 Jul 2024, 11:07:47 AM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 
@@ -43,13 +43,6 @@ export async function addTask(task, dispatch) {
     // add task to store
     task.id = id;
     dispatch(addToStore(task));
-
-    // show a toast
-    Toast.show({
-        type: "success",
-        text1: "Add Succeeded",
-        text2: `Successfully added "${task.description}" to the list!`,
-    });
 
     return true;
 }
