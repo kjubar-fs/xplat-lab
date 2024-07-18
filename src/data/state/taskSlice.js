@@ -1,25 +1,29 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 15 Jul 2024, 10:13:54 AM
- *  Last update: 15 Jul 2024, 11:36:15 AM
+ *  Last update: 18 Jul 2024, 9:56:04 AM
  *  Copyright (c) 2024 Kaleb Jubar
  */
+// Redux
 import { createSlice } from "@reduxjs/toolkit";
 
+// toasts
 import Toast from "react-native-toast-message";
 
+// random UUID generation
 import "react-native-get-random-values";
 import { v4 as uuid } from "uuid";
-
-import db from "../db/firebase";
 
 const taskSlice = createSlice({
     name: "task",
     initialState: {
-        // TODO: pull list of tasks when first loading here
         tasks: [],
     },
     reducers: {
+        setTasks: (state, action) => {
+            state.tasks = action.payload;
+        },
+
         addTask: (state, action) => {
             const task = action.payload;
             
@@ -34,8 +38,6 @@ const taskSlice = createSlice({
                 type: "success",
                 text1: "Add Succeeded",
                 text2: `Successfully added "${task.description}" to the list!`,
-                position: "bottom",
-                bottomOffset: 120,
             });
 
             // TODO: figure out how to use async with redux
@@ -51,8 +53,6 @@ const taskSlice = createSlice({
             //         type: "success",
             //         text1: "Add Succeeded",
             //         text2: `Successfully added "${task.description}" to the list!`,
-            //         position: "bottom",
-            //         bottomOffset: 120,
             //     });
             // });
         },
@@ -69,7 +69,7 @@ const taskSlice = createSlice({
             }
             
             // make change in database
-            db.setTaskCompleted(id, completed);
+            // db.setTaskCompleted(id, completed);
         },
 
         deleteTask: (state, action) => {
@@ -86,20 +86,18 @@ const taskSlice = createSlice({
             });
 
             // delete from database
-            db.deleteTask(id);
+            // db.deleteTask(id);
 
             // show toast
             Toast.show({
                 type: "success",
                 text1: "Delete Succeeded",
                 text2: `Successfully deleted "${deletedDesc}".`,
-                position: "bottom",
-                bottomOffset: 120,
             });
         },
     },
 });
 
-export const { addTask, setTaskCompleted, deleteTask } = taskSlice.actions;
+export const { setTasks, addTask, setTaskCompleted, deleteTask } = taskSlice.actions;
 
 export default taskSlice.reducer;

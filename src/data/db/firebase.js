@@ -1,7 +1,7 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 15 Jul 2024, 9:59:47 AM
- *  Last update: 17 Jul 2024, 9:28:43 AM
+ *  Last update: 18 Jul 2024, 9:59:32 AM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 import {
@@ -24,7 +24,7 @@ class FirebaseDatabase {
 
     /**
      * Opens the Firestore database.
-     * @returns a Promise indicating if the operation succeeded
+     * @returns true if successful, false if not
      */
     async open() {
         try {
@@ -35,10 +35,10 @@ class FirebaseDatabase {
                 this.isAvailable = true;
                 return true;
             } else {
-                throw new Error("Database is not available");
+                return false;
             }
         } catch(err) {
-            throw new Error(`Error opening database: ${err}`)
+            return false;
         }     
     }
 
@@ -46,12 +46,12 @@ class FirebaseDatabase {
      * Add a new task to the database.
      * @param {any} task an object representing the task to add,
      *                   should have description and completed fields
-     * @returns a Promise containing the ID of the created task
+     * @returns the ID of the created task, or null if failed
      */
     async addTask(task) {
         // check if db is available
         if (!this.isAvailable) {
-            throw new Error("Error: database has not been opened!");
+            return null;
         }
 
         // add the doc and return the ID
@@ -59,7 +59,7 @@ class FirebaseDatabase {
             const docRef = await addDoc(collection(this.db, TASKS_COLL), task);
             return docRef.id;
         } catch(err) {
-            throw new Error(`Error adding task: ${err}`);
+            return null;
         }
     }
 
@@ -67,12 +67,12 @@ class FirebaseDatabase {
      * Update a tasks's completed status.
      * @param {string} id ID of task to update
      * @param {boolean} completed completed value to set
-     * @returns a Promise indicating if the operation succeeded
+     * @returns true if successful, false if not
      */
     async setTaskCompleted(id, completed) {
         // check if db is available
         if (!this.isAvailable) {
-            throw new Error("Error: database has not been opened!");
+            return false;
         }
         
         try {
@@ -83,19 +83,19 @@ class FirebaseDatabase {
             );
             return true;
         } catch(err) {
-            throw new Error(`Error updating task status: ${err}`);
+            return false;
         }
     }
 
     /**
      * Delete a task.
      * @param {string} id ID of task to delete
-     * @returns a Promise indicating if the operation succeeded
+     * @returns true if successful, false if not
      */
     async deleteTask(id) {
         // check if db is available
         if (!this.isAvailable) {
-            throw new Error("Error: database has not been opened!");
+            return false;
         }
         
         try {
@@ -103,18 +103,18 @@ class FirebaseDatabase {
             await deleteDoc(doc(this.db, TASKS_COLL, id));
             return true;
         } catch(err) {
-            throw new Error(`Error deleting task: ${err}`);
+            return false;
         }
     }
 
     /**
      * Get the list of tasks from the database.
-     * @returns a Promise containing the list of tasks
+     * @returns the list of tasks, or null if failed
      */
     async getTasks() {
         // check if db is available
         if (!this.isAvailable) {
-            throw new Error("Error: database has not been opened!");
+            return null;
         }
         
         try {
@@ -128,7 +128,7 @@ class FirebaseDatabase {
             });
             return results;
         } catch(err) {
-            throw new Error(`Error getting task list: ${err}`);
+            return null;
         }
     }
 }
