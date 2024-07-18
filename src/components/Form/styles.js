@@ -1,7 +1,7 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 29 May 2024, 5:42:19 PM
- *  Last update: 3 Jul 2024, 1:18:45 PM
+ *  Last update: 18 Jul 2024, 10:27:34 AM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 import { Platform, StyleSheet } from "react-native";
@@ -71,5 +71,17 @@ export default StyleSheet.create({
         fontSize: 18,
         textAlign: "center",
         color: "white",
+    },
+
+    loadingContainer: {
+        flex: 1,
+        justifyContent: "center",
+        gap: 20,
+        maxHeight: "50%",
+    },
+
+    loadingText: {
+        fontSize: 18,
+        textAlign: "center",
     },
 });

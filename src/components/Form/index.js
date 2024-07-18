@@ -1,11 +1,11 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 29 May 2024, 5:26:32 PM
- *  Last update: 18 Jul 2024, 10:21:04 AM
+ *  Last update: 18 Jul 2024, 10:32:39 AM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 // React Native components
-import { View, Text, TextInput, Switch, Pressable, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, Switch, Pressable, TouchableOpacity, ActivityIndicator } from "react-native";
 
 // hooks
 import { useState } from "react";
@@ -16,12 +16,14 @@ import { addTask } from "../../data/db";
 
 // local vars
 import styles from "./styles";
+import { primaryColor } from "../../includes/variables";
 
 export default function Form({ navigation }) {
     // create state for inputs and error message
     const [description, setDescription] = useState("");
     const [completed, setCompleted] = useState(false);
     const [error, setError] = useState("");
+    const [saving, setSaving] = useState(false);
 
     // dispatch for redux
     const dispatch = useDispatch();
@@ -40,19 +42,38 @@ export default function Form({ navigation }) {
             return;
         }
 
-        // call add task db function
-        addTask({
-            description,
-            completed,
-        }, dispatch);
+        // async IIFE for adding task
+        (async () => {
+            // call add task db function
+            setSaving(true);
+            const success = await addTask({
+                description,
+                completed,
+            }, dispatch);
+            setSaving(false);
 
-        // reset form fields
-        setError("");
-        setDescription("");
-        setCompleted(false);
+            if (!success) {
+                setError("Add failed, try again later.");
+                return;
+            }
+    
+            // reset form fields
+            setError("");
+            setDescription("");
+            setCompleted(false);
+    
+            // navigate back to task list
+            navigation.navigate("TasksScreen");
+        })();
+    }
 
-        // navigate back to task list
-        navigation.navigate("TasksScreen");
+    if (saving) {
+        return (
+            <View style={styles.loadingContainer}>
+                <ActivityIndicator size="large" color={primaryColor} />
+                <Text style={styles.loadingText}>Saving, please wait...</Text>
+            </View>
+        );
     }
 
     return (
@@ -60,7 +81,7 @@ export default function Form({ navigation }) {
             {/* conditionally display the error message if it exists */}
             {error &&
                 <View style={styles.errorContainer}>
-                    <Text style={styles.errorTitle}>Invalid data:</Text>
+                    <Text style={styles.errorTitle}>Error:</Text>
                     <Text style={styles.errorItem}>{error}</Text>
                 </View>}
 

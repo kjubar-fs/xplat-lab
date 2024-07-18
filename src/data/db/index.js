@@ -1,7 +1,7 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 18 Jul 2024, 9:31:10 AM
- *  Last update: 18 Jul 2024, 10:16:27 AM
+ *  Last update: 18 Jul 2024, 10:32:28 AM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 
@@ -47,6 +47,8 @@ export async function addTask(task, dispatch) {
         text1: "Add Succeeded",
         text2: `Successfully added "${task.description}" to the list!`,
     });
+
+    return true;
 }
 
 export async function setTaskCompleted(id, completed) {
