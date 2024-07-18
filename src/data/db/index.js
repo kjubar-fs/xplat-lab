@@ -1,21 +1,21 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 18 Jul 2024, 9:31:10 AM
- *  Last update: 18 Jul 2024, 11:07:47 AM
+ *  Last update: 18 Jul 2024, 11:20:10 AM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 
 // functions for performing both DB updates and state updates together
 // allows one location for all calls and easy switching of cloud DB
 
-// toasts
-import Toast from "react-native-toast-message";
-
 // database
 import db from "./firebase";
+
+// store
 import {
     addTask as addToStore,
-    setTaskCompleted as setCompleted
+    setTaskCompleted as setCompleted,
+    deleteTask as remove
 } from "../state/taskSlice";
 
 /**
@@ -70,6 +70,21 @@ export async function setTaskCompleted(id, completed, dispatch) {
     return true;
 }
 
-export async function deleteTask(id) {
+/**
+ * Delete a task.
+ * @param {string} id ID of task to delete
+ * @param {Dispatch<UnknownAction>} dispatch dispatch provider to update store
+ * @returns true if successful, false if not
+ */
+export async function deleteTask(id, dispatch) {
+    // attempt delete from db first
+    const success = await db.deleteTask(id);
+    if (!success) {
+        return false;
+    }
 
+    // delete from store
+    dispatch(remove(id));
+
+    return true;
 }

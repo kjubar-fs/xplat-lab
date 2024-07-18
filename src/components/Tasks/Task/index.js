@@ -1,7 +1,7 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 29 May 2024, 5:26:51 PM
- *  Last update: 18 Jul 2024, 11:06:25 AM
+ *  Last update: 18 Jul 2024, 11:18:48 AM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 // React Native components
@@ -22,7 +22,7 @@ import { useDispatch } from "react-redux";
 import Toast from "react-native-toast-message";
 
 // database
-import { setTaskCompleted } from "../../../data/db";
+import { setTaskCompleted, deleteTask } from "../../../data/db";
 
 // local vars
 import styles from "./styles";
@@ -70,8 +70,23 @@ export default function Task({ id, description, completed }) {
             {
                 // yes button deletes the task
                 text: "Yes",
-                onPress: () => {
-                    dispatch(deleteTask(id));
+                onPress: async () => {
+                    const success = await deleteTask(id, dispatch);
+                    
+                    // show toast
+                    if (!success) {
+                        Toast.show({
+                            type: "error",
+                            text1: "Delete Failed",
+                            text2: "Failed to delete task, try again later.",
+                        });
+                    } else {
+                        Toast.show({
+                            type: "success",
+                            text1: "Delete Succeeded",
+                            text2: `Successfully deleted "${description}".`,
+                        });
+                    }
                 }
             }
         ]);

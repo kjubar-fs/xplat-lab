@@ -1,7 +1,7 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 15 Jul 2024, 10:13:54 AM
- *  Last update: 18 Jul 2024, 11:05:03 AM
+ *  Last update: 18 Jul 2024, 11:17:18 AM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 // Redux
@@ -42,24 +42,7 @@ const taskSlice = createSlice({
             const id = action.payload;
 
             // filter list to delete task with matching ID
-            // save description for toast
-            let deletedDesc = "";
-            state.tasks = state.tasks.filter((task) => {
-                if (task.id === id) {
-                    deletedDesc = task.description;
-                }
-                return task.id !== id
-            });
-
-            // delete from database
-            // db.deleteTask(id);
-
-            // show toast
-            Toast.show({
-                type: "success",
-                text1: "Delete Succeeded",
-                text2: `Successfully deleted "${deletedDesc}".`,
-            });
+            state.tasks = state.tasks.filter((task) => task.id !== id);
         },
     },
 });
