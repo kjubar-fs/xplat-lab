@@ -1,7 +1,7 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 18 Jul 2024, 9:31:10 AM
- *  Last update: 18 Jul 2024, 10:32:28 AM
+ *  Last update: 18 Jul 2024, 11:04:42 AM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 
@@ -13,7 +13,10 @@ import Toast from "react-native-toast-message";
 
 // database
 import db from "./firebase";
-import { addTask as addToStore } from "../state/taskSlice";
+import {
+    addTask as addToStore,
+    setTaskCompleted as setCompleted
+} from "../state/taskSlice";
 
 /**
  * Get the list of tasks from the database.
@@ -51,8 +54,27 @@ export async function addTask(task, dispatch) {
     return true;
 }
 
-export async function setTaskCompleted(id, completed) {
+/**
+ * Update the completed status of a task.
+ * @param {string} id ID of task to update
+ * @param {boolean} completed completed status for task
+ * @param {Dispatch<UnknownAction>} dispatch dispatch provider to update store
+ * @returns true if successful, false if not
+ */
+export async function setTaskCompleted(id, completed, dispatch) {
+    // assume update will complete and update store first
+    dispatch(setCompleted({ id, completed }));
 
+    // run db update
+    const success = await db.updateTask(id, { completed });
+
+    // revert store if db update failed
+    if (!success) {
+        dispatch(setCompleted(id, !completed));
+        return false;
+    }
+
+    return true;
 }
 
 export async function deleteTask(id) {

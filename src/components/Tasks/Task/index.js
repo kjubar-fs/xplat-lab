@@ -1,20 +1,30 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 29 May 2024, 5:26:51 PM
- *  Last update: 15 Jul 2024, 10:48:15 AM
+ *  Last update: 18 Jul 2024, 11:06:25 AM
  *  Copyright (c) 2024 Kaleb Jubar
  */
+// React Native components
 import {
     View, Text, Switch, Pressable,
     TouchableHighlight, Modal, TouchableOpacity, Alert
 } from "react-native";
-import { useState } from "react";
+
+// icons
 import { Ionicons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+
+// hooks
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { setTaskCompleted, deleteTask } from "../../../data/state/taskSlice";
+// toasts
+import Toast from "react-native-toast-message";
 
+// database
+import { setTaskCompleted } from "../../../data/db";
+
+// local vars
 import styles from "./styles";
 import { primaryColor } from "../../../includes/variables";
 
@@ -28,11 +38,15 @@ export default function Task({ id, description, completed }) {
     /**
      * Toggle the completed status of this task.
      */
-    const toggleCompleted = () => {
-        dispatch(setTaskCompleted({
-            id,
-            completed: !completed,
-        }));
+    const toggleCompleted = async () => {
+        const success = await setTaskCompleted(id, !completed, dispatch);
+        if (!success) {
+            Toast.show({
+                type: "error",
+                text1: "Failed to Update Status",
+                text2: "Could not update status, try again later.",
+            });
+        }
     };
 
     /**
@@ -117,6 +131,9 @@ export default function Task({ id, description, completed }) {
                         </TouchableHighlight>
                     </Pressable>
                 </Pressable>
+
+                {/* need a Toast component inside the modal to show over top */}
+                <Toast position="bottom" bottomOffset={120} />
             </Modal>
         </>
     );

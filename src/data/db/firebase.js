@@ -1,7 +1,7 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 15 Jul 2024, 9:59:47 AM
- *  Last update: 18 Jul 2024, 9:59:32 AM
+ *  Last update: 18 Jul 2024, 10:48:59 AM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 import {
@@ -64,12 +64,12 @@ class FirebaseDatabase {
     }
 
     /**
-     * Update a tasks's completed status.
+     * Update a tasks.
      * @param {string} id ID of task to update
-     * @param {boolean} completed completed value to set
+     * @param {boolean} data data to update
      * @returns true if successful, false if not
      */
-    async setTaskCompleted(id, completed) {
+    async updateTask(id, data) {
         // check if db is available
         if (!this.isAvailable) {
             return false;
@@ -79,7 +79,7 @@ class FirebaseDatabase {
             // update the doc in the collection
             await updateDoc(
                 doc(this.db, TASKS_COLL, id),
-                { completed }
+                data
             );
             return true;
         } catch(err) {

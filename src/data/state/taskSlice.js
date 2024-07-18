@@ -1,7 +1,7 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 15 Jul 2024, 10:13:54 AM
- *  Last update: 18 Jul 2024, 10:09:27 AM
+ *  Last update: 18 Jul 2024, 11:05:03 AM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 // Redux
@@ -36,9 +36,6 @@ const taskSlice = createSlice({
                     return;     // early return for optimization
                 }
             }
-            
-            // make change in database
-            // db.setTaskCompleted(id, completed);
         },
 
         deleteTask: (state, action) => {
