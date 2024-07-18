@@ -1,18 +1,23 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 29 May 2024, 5:26:32 PM
- *  Last update: 15 Jul 2024, 10:29:37 AM
+ *  Last update: 18 Jul 2024, 10:21:04 AM
  *  Copyright (c) 2024 Kaleb Jubar
  */
-import { useState } from "react";
+// React Native components
 import { View, Text, TextInput, Switch, Pressable, TouchableOpacity } from "react-native";
+
+// hooks
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { addTask } from "../../data/state/taskSlice";
+// database
+import { addTask } from "../../data/db";
 
+// local vars
 import styles from "./styles";
 
-export default function Form({ addTaskCallback }) {
+export default function Form({ navigation }) {
     // create state for inputs and error message
     const [description, setDescription] = useState("");
     const [completed, setCompleted] = useState(false);
@@ -35,16 +40,19 @@ export default function Form({ addTaskCallback }) {
             return;
         }
 
-        // call add task reducer
-        dispatch(addTask({
+        // call add task db function
+        addTask({
             description,
             completed,
-        }));
+        }, dispatch);
 
         // reset form fields
         setError("");
         setDescription("");
         setCompleted(false);
+
+        // navigate back to task list
+        navigation.navigate("TasksScreen");
     }
 
     return (
