@@ -1,7 +1,7 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 29 May 2024, 5:26:32 PM
- *  Last update: 18 Jul 2024, 11:08:12 AM
+ *  Last update: 18 Jul 2024, 11:10:10 AM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 // React Native components
@@ -72,7 +72,7 @@ export default function Form({ navigation }) {
             Toast.show({
                 type: "success",
                 text1: "Add Succeeded",
-                text2: `Successfully added "${task.description}" to the list!`,
+                text2: `Successfully added "${description}" to the list!`,
             });
         })();
     }
