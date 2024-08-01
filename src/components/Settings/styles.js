@@ -1,7 +1,7 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 1 Aug 2024, 11:00:40 AM
- *  Last update: 1 Aug 2024, 11:41:32 AM
+ *  Last update: 1 Aug 2024, 1:14:28 PM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 import { Platform, StyleSheet } from "react-native";
@@ -9,6 +9,11 @@ import { Platform, StyleSheet } from "react-native";
 export default StyleSheet.create({
     container: {
         padding: 20,
+        gap: 15,
+    },
+
+    error: {
+        color: "#C00",
     },
 
     settingContainer: {
@@ -28,7 +33,7 @@ export default StyleSheet.create({
     switchContainer: {
         flexDirection: "row",
         alignItems: "center",
-        gap: Platform.OS === "ios" ? 10 : 0,
+        gap: Platform.OS === "ios" ? 10 : 5,
         marginTop: 10,
     },
 });

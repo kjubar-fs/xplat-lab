@@ -1,7 +1,7 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 26 Oct 1985, 4:15:00 AM
- *  Last update: 1 Aug 2024, 11:11:17 AM
+ *  Last update: 1 Aug 2024, 1:11:32 PM
  *  Copyright (c) 1985 - 2024 Kaleb Jubar
  */
 // React Native/Expo components
@@ -16,6 +16,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 // toasts
 import Toast from "react-native-toast-message";
+
+// notifications
+import * as Notifications from "expo-notifications";
 
 // state and database
 import { Provider } from "react-redux";
@@ -36,6 +39,15 @@ import Settings from "./src/components/Settings";
 SplashScreen.preventAutoHideAsync();
 
 const Tab = createBottomTabNavigator();
+
+// set up notification handler to show notifs
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: true,
+    }),
+});
 
 export default function App() {
     return (
