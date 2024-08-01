@@ -1,7 +1,7 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 26 Oct 1985, 4:15:00 AM
- *  Last update: 18 Jul 2024, 10:05:17 AM
+ *  Last update: 1 Aug 2024, 11:11:17 AM
  *  Copyright (c) 1985 - 2024 Kaleb Jubar
  */
 // React Native/Expo components
@@ -31,6 +31,7 @@ import Header from "./src/components/Header";
 import Tasks from "./src/components/Tasks";
 import Form from "./src/components/Form";
 import Footer from "./src/components/Footer";
+import Settings from "./src/components/Settings";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -83,6 +84,21 @@ export default function App() {
                                     ),
                                 }}
                                 component={Form}
+                            />
+
+                            <Tab.Screen
+                                name="SettingsScreen"
+                                options={{
+                                    title: "Settings",
+                                    tabBarIcon: ({ color, size }) => (
+                                        <MaterialIcons
+                                            name="settings"
+                                            size={size}
+                                            color={color}
+                                        />
+                                    ),
+                                }}
+                                component={Settings}
                             />
                         </Tab.Navigator>
 
