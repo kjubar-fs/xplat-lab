@@ -1,7 +1,7 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 1 Aug 2024, 11:00:36 AM
- *  Last update: 1 Aug 2024, 1:23:20 PM
+ *  Last update: 1 Aug 2024, 1:36:51 PM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 import { useState, useEffect } from "react";
@@ -56,8 +56,8 @@ export default function Settings() {
                 // schedule notification
                 const id = await Notifications.scheduleNotificationAsync({
                     content: {
-                        title: "Post Reminder",
-                        body: "Have you posted in your diary already?",
+                        title: "Todo Reminder",
+                        body: "Have you updated your to-do tasks today? Take a minute to review your list before bed!",
                         sound: true,
                         color: primaryColor,
                         data: {
@@ -66,8 +66,8 @@ export default function Settings() {
                     },
                     trigger: {
                         seconds: 10,
-                        // hour: 13,
-                        // minute: 6,
+                        // hour: 20,
+                        // minute: 0,
                         repeats: true,
                     },
                 });
