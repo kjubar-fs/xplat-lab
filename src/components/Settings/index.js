@@ -1,7 +1,7 @@
 /*
  *  Author: Kaleb Jubar
  *  Created: 1 Aug 2024, 11:00:36 AM
- *  Last update: 1 Aug 2024, 1:36:51 PM
+ *  Last update: 1 Aug 2024, 2:00:07 PM
  *  Copyright (c) 2024 Kaleb Jubar
  */
 import { useState, useEffect } from "react";
@@ -48,7 +48,7 @@ export default function Settings() {
                     });
                     
                     if (!hasNotifPermission(request)) {
-                        setSettingsErr("Enable notifications in your phone settings to turn on reminders.")
+                        setSettingsErr("Enable notifications in your phone settings to turn on reminders.");
                         return;
                     }
                 }
@@ -74,6 +74,7 @@ export default function Settings() {
                 
                 if (!id) {
                     setSettingsErr("Unable to schedule reminder, try again later.");
+                    return;
                 }
 
                 // clear error and set switch to true
@@ -94,6 +95,7 @@ export default function Settings() {
             
             // cancel and turn off switch
             await Notifications.cancelScheduledNotificationAsync(id);
+            setSettingsErr(null);
             setDailyReminder(false);
         }
     };
